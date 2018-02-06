@@ -44,6 +44,8 @@ function lifeIsMeaningless(){
         // https://farm{farm-id}.staticflickr.com/{server-id}/{id}_{secret}.jpg
         var url = 'https://farm'+photo.farm+'.staticflickr.com/'+photo.server+'/'+photo.id+'_'+photo.secret+'.jpg';
     
+        console.log("url: " + url);
+
         Jimp.read(url).then(function (preImage) {
 
             var image = preImage;
@@ -115,7 +117,7 @@ function lifeIsMeaningless(){
               var params = { status: 'Death is certain', media_ids: [mediaIdStr] }
 
               T.post('statuses/update', params, function (err, data, response) {
-                console.log(data)
+                //console.log(data)
               })
             }
           })
