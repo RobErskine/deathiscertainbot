@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "jimp": "git+https://github.com/oliver-moran/jimp.git#pull/199/head"
+  },
+  "devDependencies": {
+    "install": "^0.10.4",
+    "node-flickr": "^1.0.0",
+    "npm": "^5.6.0"
+  }
+}
