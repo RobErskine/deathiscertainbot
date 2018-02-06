@@ -22,7 +22,7 @@ console.log(attribution);
 
 function lifeIsMeaningless(){
 
-    flickr.get("photos.search", {"tags":"family,bunnies,puppies,kittens,rainbows,panda,hedgehog,happiness"}, function(err, result){
+    flickr.get("photos.search", {"tags":"bunnies,puppies,kittens,panda,hedgehog"}, function(err, result){
         if (err) return console.error(err);
 
         var photos = result.photos.photo;
@@ -52,7 +52,7 @@ function lifeIsMeaningless(){
                 .quality(80)                 // set JPEG quality
                 .greyscale()  
                 .color([
-                    { apply: 'darken', params: [ 25 ] },
+                    { apply: 'darken', params: [ 20 ] },
                 ])
 
             console.log(message.quote.length);
@@ -129,4 +129,4 @@ function lifeIsMeaningless(){
 
 lifeIsMeaningless();
 
-setInterval(lifeIsMeaningless(), 1000 * 60 * 30);
+// setInterval(lifeIsMeaningless(), 1000 * 60 * 30);
