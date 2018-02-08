@@ -7,28 +7,25 @@ var Flickr = require("node-flickr");
 var keys = {"api_key": '992a5f2498c7d9ef0d8133dcf4cbb0b4'}
 flickr = new Flickr(keys);
 
-
 var messages = responses.length;
 var message = responses[Math.floor(Math.random() * Math.floor(messages))];
 var attribution = '';
-
-console.log('attr: ' + message.attribution);
 
 if(message.attribution != ""){
     attribution = '--'+message.attribution;
 }
 
-console.log(attribution);
-
 function lifeIsMeaningless(){
 
-    flickr.get("photos.search", {"tags":"bunnies,puppies,kittens,panda,hedgehog"}, function(err, result){
+    flickr.get("photos.search", {"tags":"bunnies,bunny,puppies,puppy,kittens,kitten,panda,pandas,hedgehog,hedgehogs,penguin,penguins"}, function(err, result){
+
         if (err) return console.error(err);
 
         var photos = result.photos.photo;
         var photosLength = result.photos.photo.length;
         var photo = photos[Math.floor(Math.random() * Math.floor(photosLength))];
     
+
         console.log(photo);
 
         //{ id: '25218187427',
@@ -61,66 +58,52 @@ function lifeIsMeaningless(){
 
             var size = message.quote.length;
 
+            // print main message
             if(size >=190){
                 Jimp.loadFont(Jimp.FONT_SANS_16_WHITE).then(function (font,cb) {
                     image.print(font, 20, 20, message.quote, 492, Jimp.ALIGN_FONT_CENTER)
-                        Jimp.loadFont(Jimp.FONT_SANS_16_WHITE).then(function (font) {
-                            image.print(font, 20, (image.bitmap.height - 30), attribution, 492, Jimp.ALIGN_FONT_LEFT)
-                            Jimp.loadFont(Jimp.FONT_SANS_16_WHITE).then(function (font) {
-                                image.print(font, 10, (image.bitmap.height - 200), 'Photo by: https://flickr.com/'+photo.owner, 492, Jimp.ALIGN_FONT_RIGHT)
-                                .write("images/image.jpg");
-                            });
-                        })
-                    
                 });
             }
             else if(size >= 60){
                 Jimp.loadFont(Jimp.FONT_SANS_32_WHITE).then(function (font,cb) {
                     image.print(font, 20, 20, message.quote, 492, Jimp.ALIGN_FONT_CENTER)
-                        Jimp.loadFont(Jimp.FONT_SANS_16_WHITE).then(function (font) {
-                           image.print(font, 20, (image.bitmap.height - 30), attribution, 492, Jimp.ALIGN_FONT_LEFT)
-                           Jimp.loadFont(Jimp.FONT_SANS_16_WHITE).then(function (font) {
-                                image.print(font, 10, (image.bitmap.width - 200), 'Photo by: https://flickr.com/'+photo.owner, 492, Jimp.ALIGN_FONT_RIGHT)
-                                .write("images/image.jpg");
-                            });
-                        })
-                    
                 });
             }
             else{
                 Jimp.loadFont(Jimp.FONT_SANS_64_WHITE).then(function (font,cb) {
                     image.print(font, 20, 20, message.quote, 492, Jimp.ALIGN_FONT_CENTER)
-                        Jimp.loadFont(Jimp.FONT_SANS_16_WHITE).then(function (font) {
-                           image.print(font, 20, (image.bitmap.height - 30), attribution, 492, Jimp.ALIGN_FONT_LEFT) 
-                           Jimp.loadFont(Jimp.FONT_SANS_16_WHITE).then(function (font) {
-                                image.print(font, 10, (image.bitmap.width - 200), 'Photo by: https://flickr.com/'+photo.owner, 492, Jimp.ALIGN_FONT_RIGHT)
-                                .write("images/image.jpg");
-                            });
-                        })
-                    
                 });
             }
+
+            // print attribution
+            Jimp.loadFont(Jimp.FONT_SANS_16_WHITE).then(function (font) {
+                image.print(font, 20, (image.bitmap.height - 30), attribution, 492, Jimp.ALIGN_FONT_LEFT)
+                Jimp.loadFont(Jimp.FONT_SANS_16_WHITE).then(function (font) {
+                    image.print(font, 10, (image.bitmap.height - 200), 'Photo: https://flickr.com/'+photo.owner, 492, Jimp.ALIGN_FONT_RIGHT)
+                    .write("images/image.jpg");
+                });
+            })
 
         var b64content = fs.readFileSync('images/image.jpg', { encoding: 'base64' })
 
         // first we must post the media to Twitter
         T.post('media/upload', { media_data: b64content }, function (err, data, response) {
-          // now we can assign alt text to the media, for use by screen readers and
-          // other text-based presentations and interpreters
-          var mediaIdStr = data.media_id_string
-          var altText = "Death is certain!"
-          var meta_params = { media_id: mediaIdStr, alt_text: { text: altText } }
+            // now we can assign alt text to the media, for use by screen readers and
+            // other text-based presentations and interpreters
+            var mediaIdStr = data.media_id_string
+            var altText = "Death is certain!"
+            var meta_params = { media_id: mediaIdStr, alt_text: { text: altText } }
 
-          T.post('media/metadata/create', meta_params, function (err, data, response) {
-            if (!err) {
-              // now we can reference the media and post a tweet (media will attach to the tweet)
-              var params = { status: 'Death is certain', media_ids: [mediaIdStr] }
+            T.post('media/metadata/create', meta_params, function (err, data, response) {
+                if (!err) {
+                    // now we can reference the media and post a tweet (media will attach to the tweet)
+                    var params = { status: 'Death is certain', media_ids: [mediaIdStr] }
 
-              T.post('statuses/update', params, function (err, data, response) {
-                //console.log(data)
-              })
-            }
-          })
+                    T.post('statuses/update', params, function (err, data, response) {
+                        //console.log(data)
+                    })
+                }
+            })
         });
 
         }).catch(function (err) {
