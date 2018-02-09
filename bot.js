@@ -114,4 +114,4 @@ function lifeIsMeaningless(){
 
 lifeIsMeaningless();
 
-// setInterval(lifeIsMeaningless(), 1000 * 60 * 30);
+setInterval(lifeIsMeaningless(), 1000 * 60 * 30);
