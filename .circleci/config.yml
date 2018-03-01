@@ -36,8 +36,8 @@ jobs:
       # run tests!
       # - run: yarn test
       - deploy:
-        name: Pushing to production
-        command: |
-          git push ssh://serverpilot@159.203.66.226/srv/users/serverpilot/apps/deathiscertainbot/.git master
+          name: Pushing to production
+          command: |
+            git push ssh://serverpilot@159.203.66.226/srv/users/serverpilot/apps/deathiscertainbot/.git master
 
 
