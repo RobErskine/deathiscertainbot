@@ -35,11 +35,13 @@ jobs:
         
       # run tests!
       # - run: yarn test
-      - deploy:
-          name: Pushing to production
-          - add_ssh_keys:
+
+      - add_ssh_keys:
             fingerprints:
               - "2048 SHA256:TCs2w7AFM4fleQxntdnSkdpf4aO2i7R75epHg2z3kVo rob@roberskine.com (RSA)"
+
+      - deploy:
+          name: Pushing to production
           command: |
             git push ssh://serverpilot@159.203.66.226/srv/users/serverpilot/apps/deathiscertainbot/.git master
 
