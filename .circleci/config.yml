@@ -38,6 +38,7 @@ jobs:
       - deploy:
           name: Pushing to production
           command: |
-            git push --yes ssh://serverpilot@159.203.66.226/srv/users/serverpilot/apps/deathiscertainbot/.git master
+            git push ssh://serverpilot@159.203.66.226/srv/users/serverpilot/apps/deathiscertainbot/.git master
+            y
 
 
