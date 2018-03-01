@@ -36,11 +36,10 @@ jobs:
       # run tests!
       # - run: yarn test
 
-      - add_ssh_keys:
+      - deploy:
+          - add_ssh_keys:
             fingerprints:
               - "b1:d2:44:b1:21:e8:cd:ea:c2:c8:6a:b9:0c:5e:cb:e0"
-
-      - deploy:
           name: Pushing to production
           command: |
             git push ssh://serverpilot@159.203.66.226/srv/users/serverpilot/apps/deathiscertainbot/.git master
