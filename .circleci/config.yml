@@ -38,7 +38,7 @@ jobs:
 
       - add_ssh_keys:
             fingerprints:
-              - "68:62:58:11:63:61:a6:c3:7e:12:f5:0a:72:0d:bf:cb"
+              - "b1:d2:44:b1:21:e8:cd:ea:c2:c8:6a:b9:0c:5e:cb:e0"
 
       - deploy:
           name: Pushing to production
