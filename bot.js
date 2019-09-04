@@ -24,7 +24,6 @@ function lifeIsMeaningless(){
         var photos = result.photos.photo;
         var photosLength = result.photos.photo.length;
         var photo = photos[Math.floor(Math.random() * Math.floor(photosLength))];
-    
 
         console.log(photo);
 
@@ -51,14 +50,14 @@ function lifeIsMeaningless(){
                 .quality(80)                 // set JPEG quality
                 .greyscale()  
                 .color([
-                    { apply: 'darken', params: [ 20 ] },
+                    { apply: 'darken', params: [ 30 ] },
                 ])
 
             console.log(message.quote.length);
 
             var size = message.quote.length;
 
-            // print main message
+            // print main message based on length of quote
             if(size >=190){
                 Jimp.loadFont(Jimp.FONT_SANS_16_WHITE).then(function (font,cb) {
                     image.print(font, 20, 20, message.quote, 492, Jimp.ALIGN_FONT_CENTER)
@@ -79,11 +78,12 @@ function lifeIsMeaningless(){
             Jimp.loadFont(Jimp.FONT_SANS_16_WHITE).then(function (font) {
                 image.print(font, 20, (image.bitmap.height - 30), attribution, 492, Jimp.ALIGN_FONT_LEFT)
                 Jimp.loadFont(Jimp.FONT_SANS_16_WHITE).then(function (font) {
-                    image.print(font, 10, (image.bitmap.height - 200), 'Photo: https://flickr.com/'+photo.owner, 492, Jimp.ALIGN_FONT_RIGHT)
+                    image.print(font, 10, (image.bitmap.height - 30), 'Photo: https://flickr.com/'+photo.owner, 492, Jimp.ALIGN_FONT_RIGHT)
                     .write("images/image.jpg");
                 });
             })
-
+        
+        // base64 encode the image
         var b64content = fs.readFileSync('images/image.jpg', { encoding: 'base64' })
 
         // first we must post the media to Twitter
@@ -91,13 +91,13 @@ function lifeIsMeaningless(){
             // now we can assign alt text to the media, for use by screen readers and
             // other text-based presentations and interpreters
             var mediaIdStr = data.media_id_string
-            var altText = "Death is certain!"
+            var altText = message.quote
             var meta_params = { media_id: mediaIdStr, alt_text: { text: altText } }
 
             T.post('media/metadata/create', meta_params, function (err, data, response) {
                 if (!err) {
                     // now we can reference the media and post a tweet (media will attach to the tweet)
-                    var params = { status: 'Death is certain', media_ids: [mediaIdStr] }
+                    var params = { status: message.quote, media_ids: [mediaIdStr] }
 
                     T.post('statuses/update', params, function (err, data, response) {
                         //console.log(data)
@@ -113,5 +113,3 @@ function lifeIsMeaningless(){
 };
 
 lifeIsMeaningless();
-
-setInterval(lifeIsMeaningless(), 1000 * 60 * 30);
