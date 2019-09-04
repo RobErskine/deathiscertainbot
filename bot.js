@@ -8,7 +8,7 @@ var keys = {"api_key": '992a5f2498c7d9ef0d8133dcf4cbb0b4'}
 flickr = new Flickr(keys);
 
 var messages = responses.length;
-var message = responses[Math.floor(Math.random() * Math.floor(messages))];
+const message = responses[Math.floor(Math.random() * Math.floor(messages))];
 var attribution = '';
 
 if(message.attribution != ""){
@@ -53,8 +53,6 @@ function lifeIsMeaningless(){
                     { apply: 'darken', params: [ 30 ] },
                 ])
 
-            console.log(message.quote.length);
-
             var size = message.quote.length;
 
             // print main message based on length of quote
@@ -78,7 +76,7 @@ function lifeIsMeaningless(){
             Jimp.loadFont(Jimp.FONT_SANS_16_WHITE).then(function (font) {
                 image.print(font, 20, (image.bitmap.height - 30), attribution, 492, Jimp.ALIGN_FONT_LEFT)
                 Jimp.loadFont(Jimp.FONT_SANS_16_WHITE).then(function (font) {
-                    image.print(font, 10, (image.bitmap.height - 30), 'Photo: https://flickr.com/'+photo.owner, 492, Jimp.ALIGN_FONT_RIGHT)
+                    image.print(font, 20, (image.bitmap.height - 30), 'Photo: https://flickr.com/'+photo.owner, 492, Jimp.ALIGN_FONT_RIGHT)
                     .write("images/image.jpg");
                 });
             })
